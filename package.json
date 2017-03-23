@@ -1,0 +1,19 @@
+{
+  "name": "coffee-time",
+  "version": "1.0.0",
+  "description": "Coordinate a Coffee Meetup With Friends",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gp22/coffee-time.git"
+  },
+  "author": "Paul Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gp22/coffee-time/issues"
+  },
+  "homepage": "https://github.com/gp22/coffee-time#readme"
+}
