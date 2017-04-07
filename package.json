@@ -2,9 +2,12 @@
   "name": "coffee-time",
   "version": "1.0.0",
   "description": "Coordinate a Coffee Meetup With Friends",
-  "main": "app.js",
+  "main": "server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": "6.10.0"
   },
   "repository": {
     "type": "git",
@@ -12,8 +15,10 @@
   },
   "author": "Paul Garcia",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/gp22/coffee-time/issues"
-  },
-  "homepage": "https://github.com/gp22/coffee-time#readme"
+  "homepage": "https://github.com/gp22/coffee-time#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongodb": "^2.2.25",
+    "mongoose": "^4.9.3"
+  }
 }
