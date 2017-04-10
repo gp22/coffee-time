@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const Event = require('./models/event');
+const Event = require('./../models/event');
 // const _ = require('lodash');
 
 const YELP_API_KEY = process.env.YELP_API_KEY;

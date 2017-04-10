@@ -10,11 +10,14 @@ const PORT = process.env.PORT;
 // Import routes
 const index = require('./routes/index');
 const query = require('./routes/query');
+const signup = require('./routes/signup');
+const event = require('./routes/event');
 
 // Setup express to use routes
 app.use(index);
 app.use(query);
-
+app.use(signup);
+app.use(event);
 
 // Start the server and listen on PORT.
 app.listen(PORT, () => {
