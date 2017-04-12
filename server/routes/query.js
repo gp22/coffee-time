@@ -22,11 +22,9 @@ router.get('/api/:city', (req, res) => {
       'Authorization': 'Bearer ' + YELP_API_KEY
     }
   }).then((response) => {
-    /*
-    The array of promises that will receive the individual promise objects
-    returned from each promise created in the forEach() loop
-    */
+    // The array of promises that will be created in the forEach() loop
     let allPromises = [];
+    
     /*
     Solved this using Promise.all() with help from these links:
     https://jsfiddle.net/nurulnabi/1k2zv9cp/2/
@@ -35,9 +33,9 @@ router.get('/api/:city', (req, res) => {
     response.data.businesses.forEach((business) => {
       /*
       For each business returned from the Yelp query:
-      Search the db for events with a venue matching the business id and wrap
+      Query the db for events with a venue matching business.id. Wrap
       each query in a promise and add it to allPromises so we can wait
-      until every query is finished before sending a response
+      until every query is finished before sending a response to the client.
       */
       allPromises.push(new Promise((resolve) => {
         return Event.findOne({ venue: business.id }).then((event) => {
@@ -59,20 +57,14 @@ router.get('/api/:city', (req, res) => {
         });
       }));
     });
+
     /*
     Don't send the business list back to the client until all promises from
     response.data.businesses.forEach() have resolved
     */
-
-    // All that needs to happen now is to figure out how to access the
-    // values of the individual promises in the allPromises array
-    Promise.all(allPromises).then(() => {
-      let businessList = [];
-      allPromises.forEach((business) => {
-        businessList.push(business);
-      })
-      console.log(businessList);
-      res.send({ businessList }); 
+    Promise.all(allPromises).then((result) => {
+      let businesses = result;
+      res.send({ businesses });
     });
     
   }).catch((e) => {
