@@ -22,17 +22,23 @@ router.get('/api/:city', (req, res) => {
       'Authorization': 'Bearer ' + YELP_API_KEY
     }
   }).then((response) => {
-    // The filtered list of businesses to send back to the client
-    // after the Yelp query.
+    /*
+    The array of promises that will receive the individual promise objects
+    returned from each promise created in the forEach() loop
+    */
     let allPromises = [];
     /*
-    Try to solve this problem using Promise.all() from this code:
+    Solved this using Promise.all() with help from these links:
     https://jsfiddle.net/nurulnabi/1k2zv9cp/2/
     https://www.sitepoint.com/deeper-dive-javascript-promises/
     */
     response.data.businesses.forEach((business) => {
-      // Search the db for events with a venue matching the id
-      
+      /*
+      For each business returned from the Yelp query:
+      Search the db for events with a venue matching the business id and wrap
+      each query in a promise and add it to allPromises so we can wait
+      until every query is finished before sending a response
+      */
       allPromises.push(new Promise((resolve) => {
         return Event.findOne({ venue: business.id }).then((event) => {
           let businessToPush = {
@@ -42,10 +48,10 @@ router.get('/api/:city', (req, res) => {
             location: business.location.address1
           };
           if (!event) {
-            // if no event is found, set the number of people going to 0
+            // If no event is found, set the number of people going to 0
             businessToPush.going = 0;
           } else {
-            // if there is one, add the number of people going to the business
+            // If an event is found, add the number of people going to the business
             businessToPush.going = event.going.length;
           }
           // businessToPush will go into the allPromises array
@@ -53,16 +59,22 @@ router.get('/api/:city', (req, res) => {
         });
       }));
     });
-    // don't send the business list until all promises from forEach() 
-    // have resolved
+    /*
+    Don't send the business list back to the client until all promises from
+    response.data.businesses.forEach() have resolved
+    */
+
+    // All that needs to happen now is to figure out how to access the
+    // values of the individual promises in the allPromises array
     Promise.all(allPromises).then(() => {
       let businessList = [];
       allPromises.forEach((business) => {
         businessList.push(business);
-      })      
-      console.log(allPromises);
-      res.send({ businessList });
+      })
+      console.log(businessList);
+      res.send({ businessList }); 
     });
+    
   }).catch((e) => {
     res.status(400).send(e);
   });
