@@ -24,37 +24,45 @@ router.get('/api/:city', (req, res) => {
   }).then((response) => {
     // The filtered list of businesses to send back to the client
     // after the Yelp query.
-    let businessList = [];
     let allPromises = [];
     /*
     Try to solve this problem using Promise.all() from this code:
     https://jsfiddle.net/nurulnabi/1k2zv9cp/2/
+    https://www.sitepoint.com/deeper-dive-javascript-promises/
     */
     response.data.businesses.forEach((business) => {
       // Search the db for events with a venue matching the id
       
-      Event.findOne({ venue: business.id }).then((event) => {
-        let businessToPush = {
-          name: business.name,
-          url: business.url,
-          id: business.id,
-          location: business.location.address1
-        };
-        if (!event) {
-          // if no event is found, set the number of people going to 0
-          businessToPush.going = 0;
-        } else {
-          // if there is one, add the number of people going to the business
-          businessToPush.going = event.going.length;
-        }
-        businessList.push(businessToPush);
-      });
-
+      allPromises.push(new Promise((resolve) => {
+        return Event.findOne({ venue: business.id }).then((event) => {
+          let businessToPush = {
+            name: business.name,
+            url: business.url,
+            id: business.id,
+            location: business.location.address1
+          };
+          if (!event) {
+            // if no event is found, set the number of people going to 0
+            businessToPush.going = 0;
+          } else {
+            // if there is one, add the number of people going to the business
+            businessToPush.going = event.going.length;
+          }
+          // businessToPush will go into the allPromises array
+          resolve(businessToPush);
+        });
+      }));
     });
     // don't send the business list until all promises from forEach() 
     // have resolved
-    // res.send({ businessList });
-    res.send(response.data);
+    Promise.all(allPromises).then(() => {
+      let businessList = [];
+      allPromises.forEach((business) => {
+        businessList.push(business);
+      })      
+      console.log(allPromises);
+      res.send({ businessList });
+    });
   }).catch((e) => {
     res.status(400).send(e);
   });
