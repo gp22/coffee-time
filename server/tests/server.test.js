@@ -35,11 +35,6 @@ describe('GET /api/:city', () => {
         expect(res.body.businesses[0]).toNotBe({});
         expect(res.body.businesses[0].name).toExist();
       })
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+      .end(done);
   });
 });
