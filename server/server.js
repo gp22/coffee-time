@@ -23,3 +23,6 @@ app.use(event);
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}.`);
 });
+
+// Export express so that it can be used by mocha for tests
+module.exports = { app };
