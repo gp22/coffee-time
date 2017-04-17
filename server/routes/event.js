@@ -17,11 +17,10 @@ router.post('/:eventId/:userId', (req, res) => {
   // const eventData = _.pick(req.body, ['venue']);
   // eventData.going = userId;
 
-  // query db to see if there is already an event with the same eventId
+  // Query db to see if there is already an event with the same eventId
   Event.findOne({ venue: eventId }).then((event) => {
-    // if there isn't:
     if (!event) {
-      // create the new event
+      // If the event doesn't exist, create it.
       const event = new Event({
         venue: eventId,
         going: userId
@@ -29,19 +28,18 @@ router.post('/:eventId/:userId', (req, res) => {
       event.save().then(() => {
         return res.send({ event });
       });
-    }
-
-    // if there is:
-    // check to see if the user is already going:
-    if (event.going.indexOf(req.params.userId) !== -1) {
-      // if they are: remove them
+    } else if (event.going.indexOf(req.params.userId) !== -1) {
+      /*   
+      If the event exists, check to see if the user is already going:
+      If they are going: remove them.
+      */
       index = event.going.indexOf(userId);
       event.going.splice(index, 1);
       event.save().then(() => {
         return res.send({ event });
       });
     } else {
-      // if they aren't: add them
+      // If they aren't going: add them.
       event.going.push(userId);
       event.save().then(() => {
         return res.send({ event });
