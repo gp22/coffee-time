@@ -1,6 +1,7 @@
 const { ObjectID } = require('mongodb');
 
 const { User } = require('./../../models/user');
+const { Event } = require('./../../models/event');
 
 const userOneId = new ObjectID();
 const userTwoId = new ObjectID();
@@ -35,4 +36,12 @@ const populateUsers = (done) => {
   }).then(() => done());
 };
 
-module.exports = { users, populateUsers };
+// clear the database before each test
+const clearEvents = (done) => {
+  // Event.remove({}).then(() => {
+  //   return Todo.insertMany(todos);
+  // }).then(() => done());
+  Event.remove({}).then(() => done());
+};
+
+module.exports = { users, populateUsers, clearEvents };
