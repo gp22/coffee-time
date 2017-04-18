@@ -7,7 +7,7 @@ const EventSchema = new mongoose.Schema({
     unique: true
   },
   going: [{
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     unique: true
   }]
 });

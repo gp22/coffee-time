@@ -12,7 +12,6 @@ const { users, populateUsers, clearEvents } = require('./seed/seed');
 
 beforeEach(populateUsers);
 beforeEach(clearEvents);
-const eventId = 'starbucks';
 
 /*
 Verify that we get a homepage
@@ -51,6 +50,7 @@ Verify that we can add and remove a user from an event
 describe('POST /:eventId/:userId', () => {
   const userOneId = users[0]._id.toHexString();
   const userTwoId = users[1]._id.toHexString();
+  const eventId = 'starbucks';
 
   it('should create new event and add a user to it', (done) => {
     request(app)
@@ -58,6 +58,7 @@ describe('POST /:eventId/:userId', () => {
       .expect(200)
       .expect((res) => {
         expect(res.body.event.going.length).toBe(1);
+        expect(res.body.event.going).toContain(userOneId);
       })
       .end((err, res) => {
         if (err) {
@@ -71,27 +72,42 @@ describe('POST /:eventId/:userId', () => {
       });
   });
 
-  it('should add a user to an existing event', (done) => {
-    request(app)
-      .post(`/${eventId}/${userTwoId}`)
-      .expect(200)
-      .expect((res) => {
-        expect(res.body.event.going.length).toBe(2);
-      })
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
+  // it('should add a user to an existing event', (done) => {
+  //   request(app)
+  //     .post(`/${eventId}/${userTwoId}`)
+  //     .expect(200)
+  //     .expect((res) => {
+  //       expect(res.body.event.going.length).toBe(2);
+  //     })
+  //     .end((err, res) => {
+  //       if (err) {
+  //         return done(err);
+  //       }
 
-        Event.findOne({ venue: eventId }).then((event) => {
-         expect(event.going.length).toBe(2);
-         done();
-        }).catch((e) => done(e));
-      });
-  });
+  //       Event.findOne({ venue: eventId }).then((event) => {
+  //        expect(event.going.length).toBe(2);
+  //        done();
+  //       }).catch((e) => done(e));
+  //     });
+  // });
 
   // it('should remove a user from an event', (done) => {
+  //   request(app)
+  //     .post(`/${eventId}/${userOneId}`)
+  //     .expect(200)
+  //     .expect((res) => {
+  //       expect(res.body.event.going).toNotContain(userOneId);
+  //     })
+  //     .end((err, res) => {
+  //       if (err) {
+  //         return done(err);
+  //       }
 
+  //       Event.findOne({ venue: eventId }).then((event) => {
+  //        expect(event.going.length).toBe(0);
+  //        done();
+  //       }).catch((e) => done(e));
+  //     });
   // });
 
   // it('should not remove another user from an event', (done) => {
@@ -102,8 +118,14 @@ describe('POST /:eventId/:userId', () => {
 
   // });
 
-  // it('should return 404 for non-object user ids', (done) => {
-
-  // });
+  it('should return 400 for non-object user ids', (done) => {
+    request(app)
+      .post(`/${eventId}/asdf`)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toNotExist();
+      })
+      .end(done);
+  });
 
 });
