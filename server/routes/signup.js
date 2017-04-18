@@ -15,10 +15,10 @@ router.post('/users', (req, res) => {
   const user = new User(userData);
 
   user.save().then(() => {
-  //   return user.generateAuthToken();
-  // }).then((token) => {
-    // res.header('x-auth', token).send(user);
-    res.send(user);
+    return user.generateAuthToken();
+  }).then((token) => {
+    res.header('x-auth', token).send(user);
+    // res.send(user);
   }).catch((e) => {
     res.status(400).send(e);
   });

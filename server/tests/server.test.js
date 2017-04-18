@@ -27,6 +27,56 @@ describe('GET /', () => {
 });
 
 /*
+Verify that we can signup a user
+*/
+describe('POST /users', () => {
+  it('should create a new user', (done) => {
+    const email = 'user2@example.com';
+    const password = 'password';
+
+    request(app)
+      .post('/users')
+      .send({ email, password })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body._id).toExist();
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        User.findById(res.body._id).then((user) => {
+          expect(user.email).toEqual(email);
+          done();
+        }).catch((e) => done(e));
+      });
+  });
+
+  it('should not create a new user with invalid info', (done) => {
+    const email = 'user2example';
+    const password = 'p';
+
+    request(app)
+      .post('/users')
+      .send({ email, password })
+      .expect(400)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        // there should only be 3 users in the collection since
+        // that's all we added before the invalid request
+        User.find().then((users) => {
+          expect(users.length).toBe(3);
+          done();
+        }).catch((e) => done(e));
+      });
+  });
+
+});
+
+/*
 Verify that we can query the app, and that we get a properly
 formatted JSON response
 */
