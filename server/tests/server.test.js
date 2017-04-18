@@ -1,5 +1,6 @@
 const expect = require('expect');
 const request = require('supertest');
+const { ObjectID } = require('mongodb');
 
 /*
 Load the necessary models and server.js since the express app
@@ -10,8 +11,8 @@ const { User } = require('./../models/user');
 const { Event } = require('./../models/event');
 const { users, populateUsers, clearEvents } = require('./seed/seed');
 
-beforeEach(populateUsers);
-beforeEach(clearEvents);
+before(populateUsers);
+before(clearEvents);
 
 /*
 Verify that we get a homepage
@@ -57,8 +58,8 @@ describe('POST /:eventId/:userId', () => {
       .post(`/${eventId}/${userOneId}`)
       .expect(200)
       .expect((res) => {
-        expect(res.body.event.going.length).toBe(1);
-        expect(res.body.event.going).toContain(userOneId);
+        expect(res.body.going.length).toBe(1);
+        expect(res.body.going).toContain(userOneId);
       })
       .end((err, res) => {
         if (err) {
@@ -72,43 +73,45 @@ describe('POST /:eventId/:userId', () => {
       });
   });
 
-  // it('should add a user to an existing event', (done) => {
-  //   request(app)
-  //     .post(`/${eventId}/${userTwoId}`)
-  //     .expect(200)
-  //     .expect((res) => {
-  //       expect(res.body.event.going.length).toBe(2);
-  //     })
-  //     .end((err, res) => {
-  //       if (err) {
-  //         return done(err);
-  //       }
+  it('should add a user to an existing event', (done) => {
+    request(app)
+      .post(`/${eventId}/${userTwoId}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.going.length).toBe(2);
+        expect(res.body.going).toContain(userTwoId);
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
 
-  //       Event.findOne({ venue: eventId }).then((event) => {
-  //        expect(event.going.length).toBe(2);
-  //        done();
-  //       }).catch((e) => done(e));
-  //     });
-  // });
+        Event.findOne({ venue: eventId }).then((event) => {
+         expect(event.going.length).toBe(2);
+         done();
+        }).catch((e) => done(e));
+      });
+  });
 
-  // it('should remove a user from an event', (done) => {
-  //   request(app)
-  //     .post(`/${eventId}/${userOneId}`)
-  //     .expect(200)
-  //     .expect((res) => {
-  //       expect(res.body.event.going).toNotContain(userOneId);
-  //     })
-  //     .end((err, res) => {
-  //       if (err) {
-  //         return done(err);
-  //       }
+  it('should remove a user from an existing event', (done) => {
+    request(app)
+      .post(`/${eventId}/${userOneId}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.going.length).toBe(1);
+        expect(res.body.going).toNotContain(userOneId);
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
 
-  //       Event.findOne({ venue: eventId }).then((event) => {
-  //        expect(event.going.length).toBe(0);
-  //        done();
-  //       }).catch((e) => done(e));
-  //     });
-  // });
+        Event.findOne({ venue: eventId }).then((event) => {
+         expect(event.going.length).toBe(1);
+         done();
+        }).catch((e) => done(e));
+      });
+  });
 
   // it('should not remove another user from an event', (done) => {
 
@@ -123,7 +126,7 @@ describe('POST /:eventId/:userId', () => {
       .post(`/${eventId}/asdf`)
       .expect(400)
       .expect((res) => {
-        expect(res.body).toNotExist();
+        expect(res.body.going).toNotExist();
       })
       .end(done);
   });

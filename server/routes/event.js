@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const mongoose = require('mongoose');
+const { ObjectID } = require('mongodb');
 const { Event } = require('./../models/event');
 
 const bodyParser = require('body-parser');
@@ -11,11 +12,12 @@ router.use(bodyParser.json());
 
 // Route to add user to event
 router.post('/:eventId/:userId', (req, res) => {
-  // get eventId and userId from query
-  userId = req.params.userId;
+  if (!ObjectID.isValid(req.params.userId)) {
+    return res.status(400).send();
+  }
+
+  userId = ObjectID.createFromHexString(req.params.userId);
   eventId = req.params.eventId;
-  // const eventData = _.pick(req.body, ['venue']);
-  // eventData.going = userId;
 
   // Query db to see if there is already an event with the same eventId
   Event.findOne({ venue: eventId }).then((event) => {
@@ -25,8 +27,8 @@ router.post('/:eventId/:userId', (req, res) => {
         venue: eventId,
         going: userId
       });
-      event.save().then(() => {
-        return res.send({ event });
+      return event.save().then((event) => {
+        return res.send(event);
       });
     } else if (event.going.indexOf(req.params.userId) !== -1) {
       /*   
@@ -35,14 +37,14 @@ router.post('/:eventId/:userId', (req, res) => {
       */
       index = event.going.indexOf(userId);
       event.going.splice(index, 1);
-      event.save().then(() => {
-        return res.send({ event });
+      return event.save().then((event) => {
+        return res.send(event);
       });
     } else {
       // If they aren't going: add them.
       event.going.push(userId);
-      event.save().then(() => {
-        return res.send({ event });
+      return event.save().then((event) => {
+        return res.send(event);
       });
     }
   }).catch((e) => {
