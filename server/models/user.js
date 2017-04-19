@@ -56,6 +56,66 @@ UserSchema.methods.generateAuthToken = function() {
   });
 };
 
+UserSchema.methods.removeToken = function(token) {
+  let user = this;
+
+  return user.update({
+    $pull: {
+      tokens: { token }
+    }
+  });
+};
+
+UserSchema.statics.findByToken = function(token) {
+  const User = this;
+  let decoded;
+
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (e) {
+    /*
+    We return Promise.reject() here because this method is used by the
+    authenticate.js middleware we defined. When the jwt.verify() call
+    fails and Promise.reject() is returned, the catch() in authenticate.js
+    is activated and a 401 status is returned.
+    */
+    return Promise.reject();
+  }
+  /*
+  Quotes are required when querying nested values ie: tokens.token, 
+  tokens.access. They're not required around _id, they're just included
+  for consistency.
+  */
+  return User.findOne({
+    '_id': decoded._id,
+    'tokens.token': token,
+    'tokens.access': 'auth'
+  });
+};
+
+UserSchema.statics.findByCredentials = function(email, password) {
+  const User = this;
+
+  return User.findOne({ email }).then((user) => {
+    if (!user) {
+      return Promise.reject();
+    }
+
+    return new Promise((resolve, reject) => {
+      // use bcrypt.compare to compare password and user.password
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (res) {
+          // if the result is true call resolve(user)
+          resolve(user);
+        } else {
+          // if the result is false call reject()
+          reject();
+        }
+      });
+    });
+  });
+};
+
 /*
 Add middleware to the userschema so we can modify the User document
 before we save it.
