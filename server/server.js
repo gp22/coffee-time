@@ -21,7 +21,7 @@ app.use(auth);
 
 // Start the server and listen on PORT.
 app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}.`);
+  console.log(`Server listening on port ${PORT}.`);
 });
 
 // Export express so that it can be used by mocha for tests

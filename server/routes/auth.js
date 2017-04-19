@@ -30,7 +30,7 @@ router.post('/login', (req, res) => {
     return user.generateAuthToken().then((token) => {
       res.header('x-auth', token).send(user);
     });
-  }).catch((e) => {
+  }).catch(() => {
     res.status(400).send();
   });
 });

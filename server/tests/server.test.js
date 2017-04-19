@@ -65,7 +65,7 @@ describe('POST /users', () => {
       .post('/users')
       .send({ email, password })
       .expect(400)
-      .end((err, res) => {
+      .end((err) => {
         if (err) {
           return done(err);
         }
@@ -129,14 +129,14 @@ describe('POST /:eventId/:userId', () => {
         expect(res.body.going.length).toBe(1);
         expect(res.body.going).toContain(userOneId);
       })
-      .end((err, res) => {
+      .end((err) => {
         if (err) {
           return done(err);
         }
 
         Event.findOne({ venue: eventId }).then((event) => {
-         expect(event.going.length).toBe(1);
-         done();
+          expect(event.going.length).toBe(1);
+          done();
         }).catch((e) => done(e));
       });
   });
@@ -149,14 +149,14 @@ describe('POST /:eventId/:userId', () => {
         expect(res.body.going.length).toBe(2);
         expect(res.body.going).toContain(userTwoId);
       })
-      .end((err, res) => {
+      .end((err) => {
         if (err) {
           return done(err);
         }
 
         Event.findOne({ venue: eventId }).then((event) => {
-         expect(event.going.length).toBe(2);
-         done();
+          expect(event.going.length).toBe(2);
+          done();
         }).catch((e) => done(e));
       });
   });
@@ -169,14 +169,14 @@ describe('POST /:eventId/:userId', () => {
         expect(res.body.going.length).toBe(1);
         expect(res.body.going).toNotContain(userOneId);
       })
-      .end((err, res) => {
+      .end((err) => {
         if (err) {
           return done(err);
         }
 
         Event.findOne({ venue: eventId }).then((event) => {
-         expect(event.going.length).toBe(1);
-         done();
+          expect(event.going.length).toBe(1);
+          done();
         }).catch((e) => done(e));
       });
   });
@@ -241,7 +241,7 @@ describe('POST /login', () => {
       .expect((res) => {
         expect(res.headers['x-auth']).toNotExist();
       })
-      .end((err, res) => {
+      .end((err) => {
         if (err) {
           return done(err);
         }
