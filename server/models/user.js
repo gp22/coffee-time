@@ -24,11 +24,11 @@ const UserSchema = new mongoose.Schema({
   tokens: [{
     access: {
       type: String,
-    //   required: true
+      required: true
     },
     token: {
       type: String,
-    //   required: true
+      required: true
     }
   }]
 });
