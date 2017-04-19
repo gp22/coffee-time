@@ -39,7 +39,9 @@ describe('POST /users', () => {
       .send({ email, password })
       .expect(200)
       .expect((res) => {
+        expect(res.headers['x-auth']).toExist();
         expect(res.body._id).toExist();
+        expect(res.body.email).toBe(email);
       })
       .end((err, res) => {
         if (err) {
@@ -48,6 +50,8 @@ describe('POST /users', () => {
 
         User.findById(res.body._id).then((user) => {
           expect(user.email).toEqual(email);
+          // Verify that the password was hashed
+          expect(user.password).toNotBe(password);
           done();
         }).catch((e) => done(e));
       });
@@ -65,8 +69,11 @@ describe('POST /users', () => {
         if (err) {
           return done(err);
         }
-        // there should only be 3 users in the collection since
-        // that's all we added before the invalid request
+
+        /*
+        There should only be 3 users in the collection since
+        that's all we added before the invalid request
+        */
         User.find().then((users) => {
           expect(users.length).toBe(3);
           done();
@@ -74,6 +81,17 @@ describe('POST /users', () => {
       });
   });
 
+  it('should not create a user if the email is in use', (done) => {
+    // Supply an email that's already taken and expect a 400
+    const email = 'user2@example.com';
+    const password = '123abc!';
+
+    request(app)
+      .post('/users')
+      .send({ email, password })
+      .expect(400)
+      .end(done);
+  });
 });
 
 /*
@@ -180,5 +198,17 @@ describe('POST /:eventId/:userId', () => {
       })
       .end(done);
   });
+});
 
+/*
+Verify that users can login, and that invalid logins are handled
+*/
+describe('POST /users/login', () => {
+  it('should login user and return auth token', (done) => {
+    
+  });
+
+  it('should reject invalid login', (done) => {
+
+  });
 });

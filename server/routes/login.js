@@ -9,17 +9,16 @@ const _ = require('lodash');
 
 router.use(bodyParser.json());
 
-// SIGNUP route
-router.post('/users', (req, res) => {
-  const userData = _.pick(req.body, ['email', 'password']);
-  const user = new User(userData);
-
-  user.save().then(() => {
-    return user.generateAuthToken();
-  }).then((token) => {
-    res.header('x-auth', token).send(user);
+// LOGIN route
+router.post('/login', (req, res) => {
+  const body = _.pick(req.body, ['email', 'password']);
+  
+  User.findByCredentials(body.email, body.password).then((user) => {
+    return user.generateAuthToken().then((token) => {
+      res.header('x-auth', token).send(user);
+    });
   }).catch((e) => {
-    res.status(400).send(e);
+    res.status(400).send();
   });
 });
 
