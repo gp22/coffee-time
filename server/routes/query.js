@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const validator = require('validator');
 const axios = require('axios');
 
 const mongoose = require('mongoose');
@@ -8,11 +9,12 @@ const { Event } = require('./../models/event');
 
 const YELP_API_KEY = process.env.YELP_API_KEY;
 const yelpUrl = 'https://api.yelp.com/v3/businesses/search?term=coffee&location=';
+const whiteList = 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 // QUERY Route
 router.get('/api/:city', (req, res) => {
-  if (req.params.city === "''") {
-    return res.status(411).send();
+  if (!validator.isWhitelisted(req.params.city, whiteList)) {
+    return res.status(400).send();
   }
   const encodedCity = encodeURIComponent(req.params.city);
   const url = yelpUrl + encodedCity;
@@ -43,7 +45,9 @@ router.get('/api/:city', (req, res) => {
             name: business.name,
             url: business.url,
             id: business.id,
-            location: business.location.address1
+            address: business.location.address1,
+            city: business.location.city,
+            state: business.location.state
           };
           if (!event) {
             // If no event is found, set the number of people going to 0

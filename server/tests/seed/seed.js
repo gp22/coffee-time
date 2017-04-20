@@ -1,4 +1,5 @@
 const { ObjectID } = require('mongodb');
+const jwt = require('jsonwebtoken');
 
 const { User } = require('./../../models/user');
 const { Event } = require('./../../models/event');
@@ -9,19 +10,19 @@ const userTwoId = new ObjectID();
 const users = [{
   _id: userOneId,
   email: 'user@example.com',
-  password: 'userOnePass'
-  // tokens: [{
-  //   access: 'auth',
-  //   token: jwt.sign({ _id: userOneId, access: 'auth' }, process.env.JWT_SECRET).toString()
-  // }]
+  password: 'userOnePass',
+  tokens: [{
+    access: 'auth',
+    token: jwt.sign({ _id: userOneId, access: 'auth' }, process.env.JWT_SECRET).toString()
+  }]
 }, {
   _id: userTwoId,
   email: 'amy@example.com',
-  password: 'userTwoPass'
-  // tokens: [{
-  //   access: 'auth',
-  //   token: jwt.sign({ _id: userTwoId, access: 'auth' }, process.env.JWT_SECRET).toString()
-  // }]
+  password: 'userTwoPass',
+  tokens: [{
+    access: 'auth',
+    token: jwt.sign({ _id: userTwoId, access: 'auth' }, process.env.JWT_SECRET).toString()
+  }]
 }];
 
 const populateUsers = (done) => {
@@ -32,7 +33,7 @@ const populateUsers = (done) => {
 
     // Use Promise.all() to wait for all of the save calls to complete
     // the callback does not get fired until all of the promises resolve
-    return Promise.all([userOne, userTwo])
+    return Promise.all([userOne, userTwo]);
   }).then(() => done());
 };
 

@@ -124,6 +124,7 @@ describe('POST /:eventId/:userId', () => {
   it('should create new event and add a user to it', (done) => {
     request(app)
       .post(`/${eventId}/${userOneId}`)
+      .set('x-auth', users[0].tokens[0].token)
       .expect(200)
       .expect((res) => {
         expect(res.body.going.length).toBe(1);
@@ -144,6 +145,7 @@ describe('POST /:eventId/:userId', () => {
   it('should add a user to an existing event', (done) => {
     request(app)
       .post(`/${eventId}/${userTwoId}`)
+      .set('x-auth', users[1].tokens[0].token)
       .expect(200)
       .expect((res) => {
         expect(res.body.going.length).toBe(2);
@@ -164,6 +166,7 @@ describe('POST /:eventId/:userId', () => {
   it('should remove a user from an existing event', (done) => {
     request(app)
       .post(`/${eventId}/${userOneId}`)
+      .set('x-auth', users[0].tokens[0].token)
       .expect(200)
       .expect((res) => {
         expect(res.body.going.length).toBe(1);
@@ -192,9 +195,24 @@ describe('POST /:eventId/:userId', () => {
   it('should return 400 for non-object user ids', (done) => {
     request(app)
       .post(`/${eventId}/asdf`)
+      .set('x-auth', users[0].tokens[0].token)
       .expect(400)
       .expect((res) => {
         expect(res.body.going).toNotExist();
+      })
+      .end(done);
+  });
+
+  /*
+  make sure we get a 401 if not authenticated and that
+  the response body is empty
+  */
+  it('should return 401 if not authenticated', (done) => {
+    request(app)
+      .post(`/${eventId}/${userOneId}`)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toEqual({});
       })
       .end(done);
   });
@@ -221,7 +239,7 @@ describe('POST /login', () => {
         }
 
         User.findById(users[0]._id).then((user) => {
-          expect(user.tokens[0]).toInclude({
+          expect(user.tokens[1]).toInclude({
             access: 'auth',
             token: res.headers['x-auth']
           });
@@ -247,7 +265,7 @@ describe('POST /login', () => {
         }
 
         User.findById(users[0]._id).then((user) => {
-          expect(user.tokens.length).toBe(1);
+          expect(user.tokens.length).toBe(2);
           done();
         }).catch((e) => done(e));
       });

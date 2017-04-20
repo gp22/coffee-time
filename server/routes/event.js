@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { ObjectID } = require('mongodb');
 const { Event } = require('./../models/event');
+const { authenticate } = require('./../middleware/authenticate');
 
 const bodyParser = require('body-parser');
 const _ = require('lodash');
@@ -11,7 +12,7 @@ const _ = require('lodash');
 router.use(bodyParser.json());
 
 // Route to add user to event
-router.post('/:eventId/:userId', (req, res) => {
+router.post('/:eventId/:userId', authenticate, (req, res) => {
   if (!ObjectID.isValid(req.params.userId)) {
     return res.status(400).send();
   }
