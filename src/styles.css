@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/styles/global.css';
+@import './app/styles/wrapper.css';
+@import './app/styles/btn.css';
+@import './app/styles/row.css';
+@import './app/styles/panel.css';
+@import './app/styles/shadow.css';
+@import './app/styles/content.css';
+@import './app/styles/footer.css';
