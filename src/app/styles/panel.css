@@ -1,0 +1,48 @@
+.panel {
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #313131;
+  border-radius: 3px;
+  border: 1px solid #777;
+}
+
+.panel div {
+  padding: 0;
+}
+
+.panel-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+.panel-subtitle {
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 300;
+}
+
+.panel-text {
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.panel-stat-text {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.panel__image {
+  max-width: 100%;
+  padding: 5%;
+}
+
+@media (min-width: 530px) {
+  .panel__image {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    height: 130px;
+  }
+}

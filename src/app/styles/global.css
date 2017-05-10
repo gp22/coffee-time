@@ -1,0 +1,29 @@
+* { box-sizing: border-box; }
+
+/* ------------------ Text ------------------ */
+
+body {
+    background-color: #212121;
+    color: #ddd;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* ------------------ Headings ------------------ */
+
+h1, h2, h3 {
+    font-weight: 300;
+}
+
+/* ------------------ Links ------------------ */
+
+a:link,
+a:visited {
+    color: #2196f3;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+a:hover,
+a:active {
+  color: #0c85e6;
+}
