@@ -1,0 +1,36 @@
+.large-hero {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.large-hero__logo {
+  max-width: 140px;
+}
+
+.large-hero__title {
+  text-align: center;
+  font-size: 2.4rem;
+  margin: 0;
+}
+
+.large-hero__subtitle {
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 0.5rem 0 0 0;
+}
+
+@media (min-width: 530px) {
+  .large-hero {
+    margin-bottom: 1rem;
+  }
+  
+  .large-hero__title {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .large-hero__subtitle {
+    text-align: left;
+  }
+}
