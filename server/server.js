@@ -1,4 +1,5 @@
 require('./config/config');
+const path = require('path');
 
 const express = require('express');
 
@@ -6,6 +7,10 @@ const { mongoose } = require('./db/mongoose');
 
 const app = express();
 const PORT = process.env.PORT;
+
+// Create link to Angular build directory
+const distDir = path.join(__dirname, '../dist');
+app.use(express.static(distDir));
 
 // Import routes
 const index = require('./routes/index');
