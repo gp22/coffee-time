@@ -94,6 +94,11 @@
     float: left;
     width: 33.33%;
   }
+
+  .row__large-6 {
+    float: left;
+    width: 50%;
+  }
   
   .row__large-8 {
     float: left;

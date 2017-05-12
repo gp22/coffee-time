@@ -16,6 +16,11 @@ export class QueryFormComponent {
     const city: string = form.value.queryCity;
     this.queryService.getCoffeeShops(city)
       .then(response => {
+        // Clear out existing coffee shops if there are any.
+        if (this.dataService.coffeeShops.length !== 0) {
+          this.dataService.clear();
+        }
+        // Build up our list of coffee shops.
         response.businesses.forEach(coffeeShop => {
           this.dataService.coffeeShops.push(
             new CoffeeShop(coffeeShop)
