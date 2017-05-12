@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <input
+      type="text"
+      placeholder="Enter a city..."
+      ngModel
+      name="queryCity">
+    <button class="btn btn--blue" type="submit">Submit</button>
+  </form>
+</div>
