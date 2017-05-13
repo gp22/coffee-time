@@ -43,6 +43,7 @@ router.get('/api/:city', (req, res) => {
           let businessToPush = {
             name: business.name,
             url: business.url,
+            image_url: business.image_url,
             id: business.id,
             address: business.location.address1,
             city: business.location.city,
