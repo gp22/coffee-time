@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const mongoose = require('mongoose');
 const { ObjectID } = require('mongodb');
 const { Event } = require('./../models/event');
 const { authenticate } = require('./../middleware/authenticate');
 
 const bodyParser = require('body-parser');
-const _ = require('lodash');
 
 router.use(bodyParser.json());
 
@@ -17,8 +15,8 @@ router.post('/:eventId/:userId', authenticate, (req, res) => {
     return res.status(400).send();
   }
 
-  userId = ObjectID.createFromHexString(req.params.userId);
-  eventId = req.params.eventId;
+  const userId = ObjectID.createFromHexString(req.params.userId);
+  const eventId = req.params.eventId;
 
   // Query db to see if there is already an event with the same eventId
   Event.findOne({ venue: eventId }).then((event) => {
@@ -36,7 +34,7 @@ router.post('/:eventId/:userId', authenticate, (req, res) => {
       If the event exists, check to see if the user is already going:
       If they are going: remove them.
       */
-      index = event.going.indexOf(userId);
+      const index = event.going.indexOf(userId);
       event.going.splice(index, 1);
       return event.save().then((event) => {
         return res.send(event);
@@ -48,7 +46,7 @@ router.post('/:eventId/:userId', authenticate, (req, res) => {
         return res.send(event);
       });
     }
-  }).catch((e) => {
+  }).catch(() => {
     res.status(400).send();
   });
 });

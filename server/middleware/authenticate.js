@@ -20,7 +20,7 @@ const authenticate = (req, res, next) => {
     req.token = token;
     next();
     // res.send(user);
-  }).catch((e) => {
+  }).catch(() => {
     res.status(401).send();
   });
 };

@@ -4,7 +4,6 @@ const router = express.Router();
 const validator = require('validator');
 const axios = require('axios');
 
-const mongoose = require('mongoose');
 const { Event } = require('./../models/event');
 
 const YELP_API_KEY = process.env.YELP_API_KEY;
