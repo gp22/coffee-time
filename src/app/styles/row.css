@@ -31,6 +31,11 @@
 /* ---------------------------- Queries ---------------------------- */
 
 @media (min-width: 530px) {
+  .row__small-3 {
+    float: left;
+    width: 25%;
+  }
+
   .row__small-4 {
     float: left;
     width: 33.33%;

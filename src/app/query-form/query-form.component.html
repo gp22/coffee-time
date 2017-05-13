@@ -1,10 +1,17 @@
 <div class="wrapper">
-  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-    <input
-      type="text"
-      placeholder="Enter a city..."
-      ngModel
-      name="queryCity">
-    <button class="btn btn--blue" type="submit">Submit</button>
-  </form>
+  <div class="row row--gutters">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="row__small-9">
+        <input
+          class="form__input form__input--full"
+          type="text"
+          placeholder="Enter a city..."
+          ngModel
+          name="queryCity">
+      </div>
+      <div class="row__small-3">
+        <button class="btn btn--blue btn--full" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
 </div>
