@@ -1,18 +1,25 @@
-<div class="row__large-6">
+<div class="row-12">
   <div class="panel shadow">
-    <h3 class="panel-title">{{ coffeeShop.name }}
-    </h3>
+    <h3 class="panel-title">{{ coffeeShop.name }}</h3>
     <div class="panel-text">
       <div class="row">
-        <div class="row-8">
-          <p>{{ coffeeShop.address }}</p>
-          <p>{{ coffeeShop.city }}</p>
+        <div class="row__small-4">
+          <img
+            [src]="coffeeShop.image_url"
+            alt="Picture of {{ coffeeShop.name }}"
+            class="panel__image">
         </div>
-        <div class="row-4">
-          <p>{{ coffeeShop.state }}</p>
-          <p>Going:
-            <span class="panel-stat-text">{{ coffeeShop.going }}</span>
-          </p>
+        <div class="row__small-8">
+          <div class="row-8">
+            <p>{{ coffeeShop.address }}</p>
+            <p>{{ coffeeShop.city }}</p>
+          </div>
+          <div class="row-4">
+            <p>{{ coffeeShop.state }}</p>
+            <p>Going:
+              <span class="panel-stat-text">{{ coffeeShop.going }}</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
