@@ -1,3 +1,16 @@
 .center {
   text-align: center;
 }
+
+.generic-content {
+  text-align: center;
+  font-weight: 300;
+  line-height: 1.65;
+  margin: 0;
+}
+
+@media (min-width: 530px) {
+  .generic-content {
+    text-align: left;
+  }
+}
