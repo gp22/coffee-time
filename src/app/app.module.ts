@@ -2,12 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { QueryFormComponent } from './query-form/query-form.component';
 import { CoffeeShopListComponent } from './coffee-shop-list/coffee-shop-list.component';
 import { CoffeeShopItemComponent } from './coffee-shop-list/coffee-shop-item/coffee-shop-item.component';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+
+const appRoutes: Routes = [
+  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: '' }
+];
 
 @NgModule({
   declarations: [
@@ -15,12 +24,15 @@ import { CoffeeShopItemComponent } from './coffee-shop-list/coffee-shop-item/cof
     HeaderComponent,
     QueryFormComponent,
     CoffeeShopListComponent,
-    CoffeeShopItemComponent
+    CoffeeShopItemComponent,
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]
