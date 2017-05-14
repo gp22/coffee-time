@@ -1,7 +1,7 @@
 <div class="wrapper">
-  <div class="row row--gutters">
-    <p class="generic-content">Enter a city to find nearby coffee shops, and how many people are going to each.</p>
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <p class="generic-content">Enter a city to find nearby coffee shops, and how many people are going to each.</p>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="row row--gutters">
       <div class="row__small-9">
         <input
           class="form__input form__input--full"
@@ -11,8 +11,8 @@
           name="queryCity">
       </div>
       <div class="row__small-3">
-        <button class="btn btn--blue btn--full" type="submit">Submit</button>
+        <button class="btn btn__default btn--full" type="submit">Submit</button>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
