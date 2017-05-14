@@ -15,31 +15,37 @@
   width: 100%;
 }
 
+.btn--top-margin {
+  margin-top: 1.4rem;
+}
+
 .btn__default {
   background-color: transparent;
   border-radius: 6px;
   border: 2px solid;
-  border-color: #2196f3;
-  color: #2196f3;
+  border-color: #a27463;
+  color: #a27463;
 }
 
 .btn__default:hover {
-  border-color: #0c85e6;
-  color: #0c85e6;
+  border-color: #996b5b;
+  color: #996b5b;
 }
 
 .btn__round {
-  background-color: #795548;
+  background-color: #4caf50;
   color: #ddd;
   font-size: 1.2rem;
   border-radius: 50%;
   border: 0;
-  height: 50px;
-  width: 50px;
+  height: 55px;
+  width: 55px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
 }
 
 .btn__round:hover {
-  background-color: #6e4e42;
+  background-color: #47a34b;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25), 0 3px 5px rgba(0, 0, 0, 0.16);
 }
 
 .btn__default--green {
