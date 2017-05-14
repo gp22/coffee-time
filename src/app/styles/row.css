@@ -1,7 +1,9 @@
 .row--gutters {
   margin-right: -10px;
 }
-.row--gutters div {
+
+.row--gutters > div,
+.row--gutters app-coffee-shop-item > div {
   padding-right: 10px;
 }
 
