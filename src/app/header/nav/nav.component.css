@@ -1,0 +1,29 @@
+.main-nav {
+  font-weight: 300;
+  background-color: #434343;
+}
+
+.main-nav ul {
+    list-style-type: none;
+    margin: 0;
+    background-color: #434343;
+}
+
+.main-nav li {
+    float: right;
+    padding: 0.5rem 1rem;
+}
+
+.main-nav li a {
+    /*padding-bottom: 6px;*/
+    display: block;
+    color: #8bc34a;
+    text-align: center;
+    /*border-bottom: 2px solid #323232;*/
+    /*transition: border-bottom 0.2s;*/
+}
+
+.main-nav li a:hover {
+  color: #7ab13b;
+    /*border-bottom: 2px solid #2196F3;*/
+}

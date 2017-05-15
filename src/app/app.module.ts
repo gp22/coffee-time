@@ -11,6 +11,7 @@ import { CoffeeShopListComponent } from './coffee-shop-list/coffee-shop-list.com
 import { CoffeeShopItemComponent } from './coffee-shop-list/coffee-shop-item/coffee-shop-item.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { NavComponent } from './header/nav/nav.component';
 
 const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
     CoffeeShopListComponent,
     CoffeeShopItemComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
