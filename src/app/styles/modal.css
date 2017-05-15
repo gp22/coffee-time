@@ -41,11 +41,11 @@
   font-size: 2rem;
   transform: scaleX(1.2);
   transform-origin: 100% 0;
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
 
-.modal__close:hover {
-
+a.modal__close {
+  color: #fff;
 }
 
 @media (min-width: 630px) {
