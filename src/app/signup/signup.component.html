@@ -1,10 +1,32 @@
-  <div class="modal">
-    <div class="modal__inner">
-      <h2 class="section-title section-title--blue section-title--less-margin"><span class="icon icon--mail section-title__icon"></span> Get in <strong>Touch</strong></h2>
-      <div class="wrapper">
-        <p class="modal__description">We will have an online order system in place soon. Until then, connect with us on any of the platforms below.</p>
-      </div>
-
+<section class="modal">
+  <div class="modal__inner">
+    <div class="wrapper auth-form">
+      <h2 class="center">Coffee Time!</h2>
+      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <input
+          class="form__input--full"
+          type="text"
+          placeholder="Name"
+          ngModel
+          name="userName">
+        <input
+          class="form__input--full"
+          type="email"
+          placeholder="Email"
+          ngModel
+          name="userEmail">
+        <input
+          class="form__input--full"
+          type="password"
+          placeholder="Password"
+          ngModel
+          name="userPassword">
+        <div >
+          <button class="btn btn__default" type="submit">Submit</button>
+          <p class="auth-form__alt-text">Already have an account? <a href="#">Sign in.</a></p>
+        </div>
+      </form>
     </div>
-    <div class="modal__close">X</div>
   </div>
+  <div class="modal__close">X</div>
+</section>

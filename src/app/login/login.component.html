@@ -1,3 +1,26 @@
-<p>
-  login works!
-</p>
+<section class="modal">
+  <div class="modal__inner">
+    <div class="wrapper auth-form">
+      <h2 class="center">Coffee Time!</h2>
+      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <input
+          class="form__input--full"
+          type="email"
+          placeholder="Email"
+          ngModel
+          name="userEmail">
+        <input
+          class="form__input--full"
+          type="password"
+          placeholder="Password"
+          ngModel
+          name="userPassword">
+        <div >
+          <button class="btn btn__default" type="submit">Submit</button>
+          <p class="auth-form__alt-text">Don't have an account? <a href="#">Sign up.</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal__close">X</div>
+</section>

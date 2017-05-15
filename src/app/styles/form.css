@@ -1,7 +1,8 @@
 .form__input {
+  height: 38px;
   border: 0;
   padding: 0.5rem;
-  margin-top: 0.7rem;
+  margin-top: 0.5rem;
 }
 
 input.form__input {
