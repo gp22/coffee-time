@@ -13,13 +13,11 @@ const distDir = path.join(__dirname, '../dist');
 app.use(express.static(distDir));
 
 // Import routes
-const index = require('./routes/index');
 const query = require('./routes/query');
 const event = require('./routes/event');
 const auth = require('./routes/auth');
 
 // Setup express to use routes
-app.use(index);
 app.use(query);
 app.use(event);
 app.use(auth);
