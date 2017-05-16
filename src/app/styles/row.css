@@ -3,7 +3,7 @@
 }
 
 .row--gutters > div,
-.row--gutters app-coffee-shop-item > div {
+.row--gutters app-coffee-shop-item > section {
   padding-right: 10px;
 }
 
