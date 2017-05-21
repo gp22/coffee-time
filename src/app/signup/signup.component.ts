@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { fadeInAnimation } from '../animations/fade-in.animation';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -11,18 +12,28 @@ import { AuthService } from '../services/auth.service';
   // attach the fade in animation to the host (root) element of this component
   host: { '[@fadeInAnimation]': '' }
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
+
+  constructor(private authService: AuthService,
+              private router: Router) { }
+  
   // Eventually this will be a new instance of the user model.
   // newUser: User = new User();
   newUser = {};
 
-  onSubmit(signUpForm: NgForm) {
-    console.log(this.newUser);
-  }
-  
-  constructor(private authService: AuthService) { }
+  loginError: boolean = false;
 
-  ngOnInit() {
+  onSubmit() {
+    this.authService.login(this.newUser)
+      .subscribe(
+        (response) => {
+          const token: string = response;
+          this.authService.setToken(token);
+          this.router.navigate(['/']);
+        },
+        (error) => {
+          console.error(`There was a problem signing up: ${error}`);
+          this.loginError = true;
+        });
   }
-
 }

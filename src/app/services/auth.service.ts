@@ -10,7 +10,7 @@ export class AuthService {
   login(user: {}) {
     const loginUrl: string = '/login';
     /*
-    login the current user from our API.
+    Login the current user with a call to loginUrl at our API.
     */
     return this.http.post(loginUrl, user)
       .map((response: Response) => {
@@ -27,6 +27,20 @@ export class AuthService {
 
   signup(user) {
     const signupUrl: string = '/users';
+    /*
+    Signup a new user with a call to signupUrl at our API.
+    */
+    return this.http.post(signupUrl, user)
+      .map((response: Response) => {
+        return response.headers.toJSON()['x-auth'][0];
+      })
+      .catch((error: Response) => {
+        /*
+        If there's a problem, throw a new error and handle it in
+        the calling function.
+        */
+        return Observable.throw(error);
+      });
   }
 
   logout() {

@@ -35,6 +35,10 @@
             <a routerLink="/signup">Sign up.</a>
           </p>
         </div>
+        <div class="panel panel__error"
+          *ngIf="this.loginError">
+          <p>There was a problem logging in!</p>
+        </div>
       </form>
     </div>
   </div>

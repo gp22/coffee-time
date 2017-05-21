@@ -26,4 +26,5 @@ a:visited {
 a:hover,
 a:active {
   color: #0c85e6;
+  cursor: pointer;
 }

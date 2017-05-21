@@ -29,6 +29,19 @@
   font-weight: 400;
 }
 
+.panel__error {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  background-color: #fdd;
+  border: 1px solid #ff9999;
+  text-align: center;
+}
+
+.panel__error p {
+  color: #f77;
+  margin: 0;
+}
+
 .panel__image {
   border-radius: 3px;
   max-width: 100%;
@@ -37,6 +50,10 @@
 @media (min-width: 530px) {
   .panel {
     padding-bottom: 1rem;
+  }
+
+  .panel__error {
+    padding-bottom: 0.7rem;
   }
 
   .panel__image {
