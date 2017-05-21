@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { fadeInAnimation } from '../animations/fade-in.animation';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,11 +16,18 @@ export class LoginComponent implements OnInit {
   // user: User = new User();
   user = {};
 
-  onSubmit(loginForm: NgForm) {
-    console.log(this.user);
+  onSubmit() {
+    this.authService.login(this.user)
+      .subscribe(
+        (response) => {
+          const token: string = response;
+          this.authService.setToken(token);
+        },
+        (error) => console.error(`There was a problem logging in: ${error}`)
+      );
   }
-  
-  constructor() { }
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
