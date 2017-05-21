@@ -11,9 +11,12 @@ import { fadeInAnimation } from '../animations/fade-in.animation';
   host: { '[@fadeInAnimation]': '' }
 })
 export class SignupComponent implements OnInit {
+  // Eventually this will be a new instance of the user model.
+  // newUser: User = new User();
+  newUser = {};
 
-  onSubmit(form: NgForm) {
-    console.log(form);
+  onSubmit(signUpForm: NgForm) {
+    console.log(this.newUser);
   }
   
   constructor() { }

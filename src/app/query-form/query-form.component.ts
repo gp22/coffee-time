@@ -12,8 +12,8 @@ import { CoffeeShop } from '../shared/coffee-shop.model';
 })
 export class QueryFormComponent {
 
-  onSubmit(form: NgForm) {
-    const city: string = form.value.queryCity;
+  onSubmit(queryForm: NgForm) {
+    const city: string = queryForm.value.queryCity;
     this.queryService.getCoffeeShops(city)
       .then(response => {
         // Clear out existing coffee shops if there are any.

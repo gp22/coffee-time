@@ -1,17 +1,24 @@
 <section class="wrapper">
   <p class="generic-content">Enter a city to find nearby coffee shops, and how many people are going to each.</p>
-  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <form (ngSubmit)="onSubmit(queryForm)" #queryForm="ngForm">
     <div class="row row--gutters">
       <div class="row__small-9">
         <input
           class="form__input form__input--full"
           type="text"
           placeholder="Enter a city..."
+          name="queryCity"
+          minlength="1"
           ngModel
-          name="queryCity">
+          required>
       </div>
       <div class="row__small-3">
-        <button class="btn btn__default btn--full" type="submit">Submit</button>
+        <button
+          class="btn btn__default btn--full"
+          type="submit"
+          [disabled]="queryForm.invalid">
+            Submit
+        </button>
       </div>
     </div>
   </form>

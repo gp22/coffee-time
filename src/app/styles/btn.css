@@ -11,6 +11,14 @@
   transform: translateY(2%);
 }
 
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  transform: none;
+}
+
 .btn--full {
   width: 100%;
 }
@@ -27,9 +35,19 @@
   color: #a27463;
 }
 
+.btn__default:disabled {
+  border-color: #e1d3cd;
+  color: #e1d3cd;
+}
+
 .btn__default:hover {
   border-color: #996b5b;
   color: #996b5b;
+}
+
+.btn__default:disabled:hover {
+  border-color: #e1d3cd;
+  color: #e1d3cd;
 }
 
 .btn__round {
