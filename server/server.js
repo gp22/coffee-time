@@ -17,12 +17,14 @@ const index = require('./routes/index');
 const query = require('./routes/query');
 const event = require('./routes/event');
 const auth = require('./routes/auth');
+const def = require('./routes/default');
 
 // Setup express to use routes
 app.use(index);
 app.use(query);
 app.use(event);
 app.use(auth);
+app.use(def);
 
 // Start the server and listen on PORT.
 app.listen(PORT, () => {
