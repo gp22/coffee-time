@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { fadeInAnimation } from '../animations/fade-in.animation';
 import { AuthService } from '../services/auth.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -16,12 +16,9 @@ export class LoginComponent {
 
   constructor(private authService: AuthService,
               private router: Router) { }
-  
-  // Eventually this will be a new instance of the user model.
-  // user: User = new User();
-  user = {};
 
-  loginError: boolean = false;
+  private user: {} = {};
+  private loginError: boolean = false;
 
   /*
   When the login form is submitted, we send the request to the API. If we get
@@ -39,6 +36,7 @@ export class LoginComponent {
         (error) => {
           console.error(`There was a problem logging in: ${error}`);
           this.loginError = true;
-        });
+        }
+      );
   }
 }

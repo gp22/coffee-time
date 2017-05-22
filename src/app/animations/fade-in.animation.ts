@@ -21,3 +21,4 @@ export const fadeInAnimation =
       animate('.3s ease-out', style({ opacity: 0 }))
     ]),
   ]);
+  

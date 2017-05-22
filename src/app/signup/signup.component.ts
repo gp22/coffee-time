@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { fadeInAnimation } from '../animations/fade-in.animation';
 import { AuthService } from '../services/auth.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -16,15 +16,13 @@ export class SignupComponent {
 
   constructor(private authService: AuthService,
               private router: Router) { }
-  
-  // Eventually this will be a new instance of the user model.
-  // newUser: User = new User();
-  newUser = {};
+
+  private newUser: {} = {};
 
   loginError: boolean = false;
 
   onSubmit() {
-    this.authService.login(this.newUser)
+    this.authService.signup(this.newUser)
       .subscribe(
         (response) => {
           const token: string = response;
@@ -34,6 +32,7 @@ export class SignupComponent {
         (error) => {
           console.error(`There was a problem signing up: ${error}`);
           this.loginError = true;
-        });
+        }
+      );
   }
 }

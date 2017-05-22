@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
 import { CoffeeShop } from '../shared/coffee-shop.model';
+import { DataService } from '../services/data.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-coffee-shop-list',
