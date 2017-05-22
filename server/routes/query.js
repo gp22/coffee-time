@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const validator = require('validator');
@@ -8,7 +9,7 @@ const { Event } = require('./../models/event');
 
 const YELP_API_KEY = process.env.YELP_API_KEY;
 const yelpUrl = 'https://api.yelp.com/v3/businesses/search?term=coffee&location=';
-const whiteList = 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const whiteList = 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ,-';
 
 // QUERY Route
 router.get('/api/:city', (req, res) => {
@@ -20,12 +21,12 @@ router.get('/api/:city', (req, res) => {
 
   axios.get(url, {
     headers: {
-      'Authorization': 'Bearer ' + YELP_API_KEY
-    }
+      Authorization: `Bearer ${YELP_API_KEY}`,
+    },
   }).then((response) => {
     // The array of promises that will be created in the forEach() loop
-    let allPromises = [];
-    
+    const allPromises = [];
+
     /*
     Solved this using Promise.all() with help from these links:
     https://jsfiddle.net/nurulnabi/1k2zv9cp/2/
@@ -40,14 +41,14 @@ router.get('/api/:city', (req, res) => {
       */
       allPromises.push(new Promise((resolve) => {
         return Event.findOne({ venue: business.id }).then((event) => {
-          let businessToPush = {
+          const businessToPush = {
             name: business.name,
             url: business.url,
             image_url: business.image_url,
             id: business.id,
             address: business.location.address1,
             city: business.location.city,
-            state: business.location.state
+            state: business.location.state,
           };
           if (!event) {
             // If no event is found, set the number of people going to 0
@@ -67,10 +68,9 @@ router.get('/api/:city', (req, res) => {
     response.data.businesses.forEach() have resolved
     */
     Promise.all(allPromises).then((result) => {
-      let businesses = result;
+      const businesses = result;
       res.send({ businesses });
     });
-    
   }).catch((e) => {
     res.status(400).send(e);
   });

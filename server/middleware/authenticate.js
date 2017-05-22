@@ -11,7 +11,7 @@ const authenticate = (req, res, next) => {
       */
       return Promise.reject();
     }
-    
+
     /*
     Set the found user and token on the request object so they're
     available to the rest of the function after next() is called

@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const { ObjectID } = require('mongodb');
@@ -30,7 +31,7 @@ router.post('/:eventId/:userId', authenticate, (req, res) => {
         return res.send(event);
       });
     } else if (event.going.indexOf(req.params.userId) !== -1) {
-      /*   
+      /*
       If the event exists, check to see if the user is already going:
       If they are going: remove them.
       */

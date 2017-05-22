@@ -13,41 +13,42 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: validator.isEmail,
-      message: '{VALUE} is not a valid email!'
-    }
+      message: '{VALUE} is not a valid email!',
+    },
   },
   password: {
     type: String,
     required: true,
-    minlength: 6
+    minlength: 6,
   },
   tokens: [{
     access: {
       type: String,
-      required: true
+      required: true,
     },
     token: {
       type: String,
-      required: true
-    }
-  }]
+      required: true,
+    },
+  }],
 });
 
 /*
 Overrides default functionality of what gets sent back when mongoose
 converts a model to JSON. We only want to send back a users id and email.
 */
-UserSchema.methods.toJSON = function() {
+UserSchema.methods.toJSON = function () {
   const user = this;
   const userObject = user.toObject();
 
   return _.pick(userObject, ['_id', 'email']);
 };
 
-UserSchema.methods.generateAuthToken = function() {
-  let user = this;
+UserSchema.methods.generateAuthToken = function () {
+  const user = this;
   const access = 'auth';
-  const token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET).toString();
+  const token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET)
+                  .toString();
 
   user.tokens.push({ access, token });
 
@@ -56,17 +57,17 @@ UserSchema.methods.generateAuthToken = function() {
   });
 };
 
-UserSchema.methods.removeToken = function(token) {
-  let user = this;
+UserSchema.methods.removeToken = function (token) {
+  const user = this;
 
   return user.update({
     $pull: {
-      tokens: { token }
-    }
+      tokens: { token },
+    },
   });
 };
 
-UserSchema.statics.findByToken = function(token) {
+UserSchema.statics.findByToken = function (token) {
   const User = this;
   let decoded;
 
@@ -89,11 +90,11 @@ UserSchema.statics.findByToken = function(token) {
   return User.findOne({
     '_id': decoded._id,
     'tokens.token': token,
-    'tokens.access': 'auth'
+    'tokens.access': 'auth',
   });
 };
 
-UserSchema.statics.findByCredentials = function(email, password) {
+UserSchema.statics.findByCredentials = function (email, password) {
   const User = this;
 
   return User.findOne({ email }).then((user) => {
@@ -120,9 +121,9 @@ UserSchema.statics.findByCredentials = function(email, password) {
 Add middleware to the userschema so we can modify the User document
 before we save it.
 */
-UserSchema.pre('save', function(next) {
-  let user = this;
-  
+UserSchema.pre('save', function (next) {
+  const user = this;
+
   /*
   Only hash the password if it was just modified. Otherwise the hashed
   password would get re-hashed every time the user is saved.

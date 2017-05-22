@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const { User } = require('./../models/user');
@@ -25,7 +26,7 @@ router.post('/users', (req, res) => {
 // LOGIN route
 router.post('/login', (req, res) => {
   const body = _.pick(req.body, ['email', 'password']);
-  
+
   User.findByCredentials(body.email, body.password).then((user) => {
     return user.generateAuthToken().then((token) => {
       res.header('x-auth', token).send(user);

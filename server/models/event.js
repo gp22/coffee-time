@@ -4,12 +4,12 @@ const EventSchema = new mongoose.Schema({
   venue: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   going: [{
     type: mongoose.Schema.Types.ObjectId,
-    unique: true
-  }]
+    unique: true,
+  }],
 });
 
 const Event = mongoose.model('Event', EventSchema);
