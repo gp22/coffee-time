@@ -9,18 +9,18 @@ import 'rxjs/Rx';
 export class EventService {
   constructor(private http: Http,
               private authService: AuthService) {}
-  
-  // Event route requires a token in the x-auth header of the post request.
-  private headers = new Headers({ 'x-auth': this.authService.getToken() });
 
   addUserToEvent(coffeeShop: CoffeeShop) {
+    // Event route requires a token in the x-auth header of the post request.
+    const headers = new Headers({ 'x-auth': this.authService.getToken() })
     const eventId = coffeeShop.id;
     const userId = this.authService.getUserId();
     const eventUrl: string = `/${eventId}/${userId}`;
+
     /*
     Add the current user to the event with a call to eventUrl at our API.
     */
-    return this.http.post(eventUrl, '', { headers: this.headers })
+    return this.http.post(eventUrl, '', { headers: headers })
       .map((response: Response) => {
         return response.json();
       })
