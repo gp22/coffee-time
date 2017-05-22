@@ -15,7 +15,12 @@
             <p>{{ coffeeShop.city }}, {{ coffeeShop.state }}</p>
           </div>
           <div class="row-4 center">
-            <button class="btn btn__round btn--top-margin">{{ coffeeShop.going }}</button>
+            <button
+              class="btn btn__round btn--top-margin"
+              (click)="addUserToEvent()"
+              [disabled]="!authService.isLoggedIn()">
+                {{ coffeeShop.going }}
+            </button>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
-import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import 'rxjs/Rx';
 
 @Injectable()
 export class AuthService {
@@ -53,6 +53,11 @@ export class AuthService {
 
   getToken() {
     return window.localStorage.coffeeTimeToken;
+  }
+
+  getUserId() {
+    const tokenObject = JSON.parse(window.atob(this.getToken().split('.')[1]));
+    return tokenObject._id;
   }
 
   isLoggedIn() {
