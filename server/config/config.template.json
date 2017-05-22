@@ -1,0 +1,20 @@
+/*
+This is the template for config.json which is used in config.js to set local
+variables that will eventually be environment variables in a deployed app.
+config.json is not included in the github repo because it contains sensitive
+details.
+*/
+{
+  "test": {
+    "PORT": 3000,
+    "MONGODB_URI": "",
+    "JWT_SECRET": "",
+    "YELP_API_KEY": ""
+  },
+  "development": {
+    "PORT": 3000,
+    "MONGODB_URI": "",
+    "JWT_SECRET": "",
+    "YELP_API_KEY": ""
+  }
+}
