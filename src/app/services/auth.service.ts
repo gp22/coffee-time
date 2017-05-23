@@ -10,11 +10,12 @@ export class AuthService {
   login(user: {}) {
     const loginUrl: string = '/login';
     /*
-    Login the current user with a call to loginUrl at our API.
+    Login the user with a call to loginUrl at our API and return the JWT.
     */
     return this.http.post(loginUrl, user)
       .map((response: Response) => {
-        return response.headers.toJSON()['x-auth'][0];
+        const token = this.getTokenFromResponse(response);
+        return token;
       })
       .catch((error: Response) => {
         /*
@@ -28,11 +29,12 @@ export class AuthService {
   signup(user) {
     const signupUrl: string = '/users';
     /*
-    Signup a new user with a call to signupUrl at our API.
+    Signup a new user with a call to signupUrl at our API and return the JWT.
     */
     return this.http.post(signupUrl, user)
       .map((response: Response) => {
-        return response.headers.toJSON()['x-auth'][0];
+        const token = this.getTokenFromResponse(response);
+        return token;
       })
       .catch((error: Response) => {
         /*
@@ -62,5 +64,10 @@ export class AuthService {
 
   isLoggedIn() {
     return this.getToken() ? true : false;
+  }
+
+  getTokenFromResponse(response: Response) {
+    const headers = response.headers.toJSON();
+    return headers['x-auth'] ? headers['x-auth'][0] : headers['X-Auth'][0];
   }
 }
