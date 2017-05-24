@@ -13,6 +13,6 @@ export class CoffeeShopListComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.coffeeShops = this.dataService.coffeeShops;
+    this.coffeeShops = this.dataService.getAllCoffeeShops();
   }
 }
