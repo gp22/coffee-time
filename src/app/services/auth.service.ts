@@ -66,7 +66,7 @@ export class AuthService {
     return this.getToken() ? true : false;
   }
 
-  getTokenFromResponse(response: Response) {
+  private getTokenFromResponse(response: Response) {
     const headers = response.headers.toJSON();
     return headers['x-auth'] ? headers['x-auth'][0] : headers['X-Auth'][0];
   }
