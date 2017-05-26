@@ -3,3 +3,8 @@ footer {
   font-weight: 300;
   margin-top: 40px;
 }
+
+footer p {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
