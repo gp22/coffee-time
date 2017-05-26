@@ -1,4 +1,5 @@
 @import './app/styles/global.css';
+@import './app/styles/container.css';
 @import './app/styles/wrapper.css';
 @import './app/styles/btn.css';
 @import './app/styles/row.css';

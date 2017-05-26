@@ -1,4 +1,8 @@
 footer {
+  position: absolute;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
   font-size: 0.8rem;
   font-weight: 300;
   margin-top: 40px;
